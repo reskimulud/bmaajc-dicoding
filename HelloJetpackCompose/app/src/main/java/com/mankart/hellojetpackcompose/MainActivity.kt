@@ -7,8 +7,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -80,6 +85,10 @@ fun HelloJetpackComposePreview() {
 
 @Composable
 fun Greeting(name: String) {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+
     Row(
         modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -98,10 +107,10 @@ fun Greeting(name: String) {
             )
             Text(text = "Welcome to Dicoding")
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { isExpanded = !isExpanded }) {
             Icon(
-                imageVector = Icons.Outlined.ExpandMore,
-                contentDescription = "Show More"
+                imageVector = if (isExpanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                contentDescription = if (isExpanded) "Show Less" else "Show More"
             )
         }
     }
