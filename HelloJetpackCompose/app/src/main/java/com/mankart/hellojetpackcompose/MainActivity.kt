@@ -5,9 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,20 +19,62 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mankart.hellojetpackcompose.ui.theme.HelloJetpackComposeTheme
 
+private val sampleName = listOf(
+    "Andre",
+    "Desta",
+    "Parto",
+    "Wendy",
+    "Komeng",
+    "Raffi Ahmad",
+    "Andhika Pratama",
+    "Vincent Ryan Rompies"
+)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HelloJetpackComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                HelloJetpackComposeApp()
             }
         }
+    }
+}
+
+@Composable
+fun HelloJetpackComposeApp() {
+    // A surface container using the 'background' color from the theme
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        GreetingList(sampleName)
+    }
+}
+
+@Composable
+fun GreetingList(names: List<String>) {
+    if (names.isNotEmpty()) {
+        Column {
+            for (name in names) {
+                Greeting(name)
+            }
+        }
+    } else {
+        Text(text = "No People to Greet :(")
+    }
+}
+
+@Preview(
+    name = "Hello Jetpack Compose App Preview",
+    showBackground = true,
+    device = Devices.PIXEL_4,
+    showSystemUi = true
+)
+@Composable
+fun HelloJetpackComposePreview() {
+    HelloJetpackComposeTheme {
+        HelloJetpackComposeApp()
     }
 }
 
@@ -48,14 +90,20 @@ fun Greeting(name: String) {
             modifier = Modifier.size(80.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = "Hello $name!",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(text = "Welcome to Dicoding")
-        } 
+        }
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                imageVector = Icons.Outlined.ExpandMore,
+                contentDescription = "Show More"
+            )
+        }
     }
 }
 
