@@ -42,12 +42,30 @@ class MainActivity : ComponentActivity() {
 fun JetCoffeeApp() {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Banner()
-        SectionText(title = stringResource(id = R.string.section_category))
-        CategoryRow()
-        SectionText(title = stringResource(id = R.string.section_favorite_menu))
-        MenuRow(listMenu = dummyMenu)
-        SectionText(title = stringResource(id = R.string.section_best_seller_menu))
-        MenuRow(listMenu = dummyBestSellerMenu)
+        HomeSection(
+            title = stringResource(id = R.string.section_category),
+            content = { CategoryRow() }
+        )
+        HomeSection(
+            title = stringResource(id = R.string.section_favorite_menu),
+            content = { MenuRow(listMenu = dummyMenu) }
+        )
+        HomeSection(
+            title = stringResource(id = R.string.section_best_seller_menu),
+            content = { MenuRow(listMenu = dummyBestSellerMenu) }
+        )
+    }
+}
+
+@Composable
+fun HomeSection(
+    title: String,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Column(modifier) {
+        SectionText(title = title, modifier)
+        content()
     }
 }
 
