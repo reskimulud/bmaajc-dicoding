@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,8 +45,12 @@ class MainActivity : ComponentActivity() {
 fun JetCoffeeApp() {
     Scaffold(
         bottomBar = { BottomBar() }
-    ) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
+        ) {
             Banner()
             HomeSection(
                 title = stringResource(id = R.string.section_category),
