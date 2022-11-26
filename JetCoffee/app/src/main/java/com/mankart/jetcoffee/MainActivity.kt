@@ -9,10 +9,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
@@ -32,6 +29,7 @@ import com.mankart.jetcoffee.ui.components.MenuItem
 import com.mankart.jetcoffee.ui.components.SearchBar
 import com.mankart.jetcoffee.ui.components.SectionText
 import com.mankart.jetcoffee.ui.theme.JetCoffeeTheme
+import com.mankart.jetcoffee.ui.theme.LightGray
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,26 +44,34 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun JetCoffeeApp() {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Banner()
-        HomeSection(
-            title = stringResource(id = R.string.section_category),
-            content = { CategoryRow() }
-        )
-        HomeSection(
-            title = stringResource(id = R.string.section_favorite_menu),
-            content = { MenuRow(listMenu = dummyMenu) }
-        )
-        HomeSection(
-            title = stringResource(id = R.string.section_best_seller_menu),
-            content = { MenuRow(listMenu = dummyBestSellerMenu) }
-        )
+    Scaffold(
+        bottomBar = { BottomBar() }
+    ) {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Banner()
+            HomeSection(
+                title = stringResource(id = R.string.section_category),
+                content = { CategoryRow() }
+            )
+            HomeSection(
+                title = stringResource(id = R.string.section_favorite_menu),
+                content = { MenuRow(listMenu = dummyMenu) }
+            )
+            HomeSection(
+                title = stringResource(id = R.string.section_best_seller_menu),
+                content = { MenuRow(listMenu = dummyBestSellerMenu) }
+            )
+        }
     }
 }
 
 @Composable
 fun BottomBar(modifier: Modifier = Modifier) {
-    BottomNavigation(modifier = modifier) {
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.primary,
+        modifier = modifier
+    ) {
         val navigationItems: List<BottomBarItem> = listOf(
             BottomBarItem(
                 title = stringResource(id = R.string.menu_home),
@@ -90,7 +96,7 @@ fun BottomBar(modifier: Modifier = Modifier) {
                     Text(text = it.title)
                 },
                 selected = it.title == navigationItems[0].title,
-                unselectedContentColor = Color.LightGray,
+                unselectedContentColor = LightGray,
                 onClick = {}
             )
         }
